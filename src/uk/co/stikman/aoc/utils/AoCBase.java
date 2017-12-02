@@ -1,6 +1,4 @@
-package uk.co.stikman.aoc2017;
-
-import uk.co.stikman.aoc2017.utils.Output;
+package uk.co.stikman.aoc.utils;
 
 public abstract class AoCBase {
 

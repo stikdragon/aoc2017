@@ -1,12 +1,23 @@
-package uk.co.stikman.aoc2017;
+package uk.co.stikman.aoc.year2017;
 
-import uk.co.stikman.aoc2017.utils.Output;
+import uk.co.stikman.aoc.utils.AoCBase;
+import uk.co.stikman.aoc.utils.Output;
 
 public class RunAll {
 
+	@SuppressWarnings("unchecked")
 	public static void main(String[] args) {
-		run(Day1.class, 1);
-		run(Day2.class, 2);
+		for (int i = 1; i <= 25; ++i) {
+			Class<? extends AoCBase> cls;
+			try {
+				cls = (Class<? extends AoCBase>) Class.forName("uk.co.stikman.aoc.year2017.Day" + i);
+				run(cls, i);
+			} catch (ClassNotFoundException e) {
+			} catch (Throwable th) {
+				System.err.println("Error on day " + i);
+				th.printStackTrace();
+			}
+		}
 	}
 
 	private static void run(Class<? extends AoCBase> cls, int day) {

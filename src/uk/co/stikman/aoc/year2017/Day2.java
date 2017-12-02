@@ -1,4 +1,4 @@
-package uk.co.stikman.aoc2017;
+package uk.co.stikman.aoc.year2017;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -7,9 +7,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import uk.co.stikman.aoc2017.utils.ConsoleOutput;
-import uk.co.stikman.aoc2017.utils.IntList;
-import uk.co.stikman.aoc2017.utils.Output;
+import uk.co.stikman.aoc.utils.AoCBase;
+import uk.co.stikman.aoc.utils.ConsoleOutput;
+import uk.co.stikman.aoc.utils.IntList;
+import uk.co.stikman.aoc.utils.Output;
 
 public class Day2 extends AoCBase {
 

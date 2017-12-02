@@ -1,4 +1,4 @@
-package uk.co.stikman.aoc2017.utils;
+package uk.co.stikman.aoc.utils;
 
 import java.util.Arrays;
 import java.util.List;

@@ -1,4 +1,4 @@
-package uk.co.stikman.aoc2017;
+package uk.co.stikman.aoc.year2017;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -11,7 +11,7 @@ import java.nio.charset.StandardCharsets;
 public class SourceData {
 
 	public static String get(int day) {
-		File f = new File("data\\Day" + day + ".txt");
+		File f = new File("data\\2017\\Day" + day + ".txt");
 		if (!f.exists())
 			throw new RuntimeException("Unknown day: " + day);
 		try (InputStream fis = new FileInputStream(f)) {

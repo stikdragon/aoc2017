@@ -1,7 +1,8 @@
-package uk.co.stikman.aoc2017;
+package uk.co.stikman.aoc.year2017;
 
-import uk.co.stikman.aoc2017.utils.ConsoleOutput;
-import uk.co.stikman.aoc2017.utils.Output;
+import uk.co.stikman.aoc.utils.AoCBase;
+import uk.co.stikman.aoc.utils.ConsoleOutput;
+import uk.co.stikman.aoc.utils.Output;
 
 public class Day1 extends AoCBase {
 
