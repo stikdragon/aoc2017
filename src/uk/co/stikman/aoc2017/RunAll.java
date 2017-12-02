@@ -1,9 +1,12 @@
 package uk.co.stikman.aoc2017;
 
+import uk.co.stikman.aoc2017.utils.Output;
+
 public class RunAll {
 
 	public static void main(String[] args) {
 		run(Day1.class, 1);
+		run(Day2.class, 2);
 	}
 
 	private static void run(Class<? extends AoCBase> cls, int day) {

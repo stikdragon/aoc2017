@@ -1,5 +1,8 @@
 package uk.co.stikman.aoc2017;
 
+import uk.co.stikman.aoc2017.utils.ConsoleOutput;
+import uk.co.stikman.aoc2017.utils.Output;
+
 public class Day1 extends AoCBase {
 
 	public static void main(String[] args) {
