@@ -16,6 +16,7 @@ public class Day1 extends AoCBase {
 
 	Set<Pair<Integer, Integer>> visited = new HashSet<>();
 
+	
 	@Override
 	public void run(String input, int part, Output out) {
 		visited.clear();

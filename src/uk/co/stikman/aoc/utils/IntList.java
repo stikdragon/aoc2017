@@ -3,7 +3,6 @@ package uk.co.stikman.aoc.utils;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 public class IntList {
 	public int[]	list;
