@@ -1,41 +1,16 @@
 package uk.co.stikman.aoc.year2016;
 
+import java.util.Arrays;
+
 import uk.co.stikman.aoc.utils.AoCBase;
 import uk.co.stikman.aoc.utils.ConsoleOutput;
 import uk.co.stikman.aoc.utils.Output;
-import uk.co.stikman.aoc.utils.Util;
 
 public class Day3 extends AoCBase {
 	public static void main(String[] args) {
-		new Day3().run(SourceData.get(2), 0, new ConsoleOutput());
-		new Day3().run(SourceData.get(2), 1, new ConsoleOutput());
+		new Day3().run(SourceData.get(3), 0, new ConsoleOutput());
+		new Day3().run(SourceData.get(3), 1, new ConsoleOutput());
 	}
-
-	private int					curX;
-	private int					curY;
-
-	/**
-	 * keypad is for part 1:
-	 * 
-	 * <pre>
-	 * 123
-	 * 456
-	 * 789
-	 * </pre>
-	 * 
-	 * and
-	 * 
-	 * <pre>
-	 *     
-			1
-		  2 3 4
-		5 6 7 8 9
-		  A B C
-		    D
-	 * </pre>
-	 * 
-	 * for part 2
-	 */
 
 	//@formatter:off
 	private static final String PART2PAD = 
@@ -49,88 +24,62 @@ public class Day3 extends AoCBase {
 	@Override
 	public void run(String input, int part, Output out) {
 		if (part == 0) {
-			curX = 1;
-			curY = 1;
-			String[] lines = input.split("\n");
-			String code = "";
-			for (String line : lines)
-				code += evalDigitPart1(line);
-			out.println("Code is: " + code);
-
+			int count = 0;
+			for (String line : SourceData.get(3).split("\n")) {
+				line = line.trim();
+				int[] sides = Arrays.stream(line.split(" +")).mapToInt(Integer::parseInt).toArray();
+				if (testTriangle(sides))
+					++count;
+			}
+			out.println("Valid triangles: " + count);
 		} else if (part == 1) {
-			curX = 0; // start on the "5"
-			curY = 2;
-			String[] lines = input.split("\n");
-			String code = "";
-			for (String line : lines)
-				code += evalDigitPart2(line);
-			out.println("Code is: " + code);
+
+			//
+			// do in groups of three
+			//
+			int count = 0;
+			int idx = 0;
+			String[] lines = new String[3];
+			for (String line : SourceData.get(3).split("\n")) {
+				line = line.trim();
+				lines[idx] = line;
+				++idx;
+				if (idx == 3) {
+					//
+					// a group
+					//
+					if (testGroup(lines, 0))
+						++count;
+					if (testGroup(lines, 1))
+						++count;
+					if (testGroup(lines, 2))
+						++count;
+
+					idx = 0;
+				}
+			}
+			out.println("Valid triangles: " + count);
 
 		} else
-			throw new RuntimeException("Part ???");
+			throw new RuntimeException("Part.. ?");
+
 	}
 
-	private char evalDigitPart2(String line) {
-		for (char ch : line.toCharArray()) {
-			int dx = 0;
-			int dy = 0;
-			switch (ch) {
-				case 'R':
-					dx = 1;
-					break;
-				case 'L':
-					dx = -1;
-					break;
-				case 'U':
-					dy = -1;
-					break;
-				case 'D':
-					dy = 1;
-					break;
-			}
-
-			if (getKeyAt(curX + dx, curY + dy) != '-') {
-				curX += dx;
-				curY += dy;
-			}
-		}
-		return getKeyAt(curX, curY);
+	private boolean testGroup(String[] lines, int col) {
+		int[] sides = new int[3];
+		for (int i = 0; i < 3; ++i)
+			sides[i] = Integer.parseInt(lines[i].split(" +")[col]);
+		return testTriangle(sides);
 	}
 
-	/**
-	 * Checks for out of bounds and returns -
-	 * 
-	 * @param x
-	 * @param y
-	 * @return
-	 */
-	private char getKeyAt(int x, int y) {
-		if (x < 0 || x > 4 || y < 0 || y > 4)
-			return '-';
-		return PART2PAD.charAt(y * 5 + x);
-	}
-
-	private char evalDigitPart1(String line) {
-		for (char ch : line.toCharArray()) {
-			switch (ch) {
-				case 'R':
-					++curX;
-					break;
-				case 'L':
-					--curX;
-					break;
-				case 'U':
-					--curY;
-					break;
-				case 'D':
-					++curY;
-					break;
-			}
-			curX = Util.clamp(curX, 0, 2);
-			curY = Util.clamp(curY, 0, 2);
-		}
-
-		return (char) ('1' + (curY * 3 + curX));
+	private boolean testTriangle(int[] sides) {
+		if (sides[0] + sides[1] <= sides[2])
+			return false;
+		if (sides[1] + sides[2] <= sides[0])
+			return false;
+		if (sides[0] + sides[2] <= sides[1])
+			return false;
+		return true;
 	}
 
 }
