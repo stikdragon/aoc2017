@@ -4,10 +4,10 @@ import uk.co.stikman.aoc.utils.AoCBase;
 import uk.co.stikman.aoc.utils.ConsoleOutput;
 import uk.co.stikman.aoc.utils.Output;
 
-public class Day10 extends AoCBase {
+public class Day20 extends AoCBase {
 	public static void main(String[] args) {
-		new Day10().run(SourceData.get(10), 0, new ConsoleOutput());
-		new Day10().run(SourceData.get(10), 1, new ConsoleOutput());
+		new Day20().run(SourceData.get(20), 0, new ConsoleOutput());
+		new Day20().run(SourceData.get(20), 1, new ConsoleOutput());
 	}
 
 	@Override

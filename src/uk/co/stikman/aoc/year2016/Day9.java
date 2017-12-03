@@ -14,11 +14,8 @@ public class Day9 extends AoCBase {
 
 	private interface StringOut {
 		void append(String s);
-
 		void append(char c);
-
 		long length();
-
 		String first(int i);
 	}
 
