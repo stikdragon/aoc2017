@@ -1,18 +1,9 @@
 package uk.co.stikman.aoc.year2017;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import uk.co.stikman.aoc.utils.AoCBase;
 import uk.co.stikman.aoc.utils.ConsoleOutput;
-import uk.co.stikman.aoc.utils.IntList;
 import uk.co.stikman.aoc.utils.Grid;
 import uk.co.stikman.aoc.utils.Output;
-import uk.co.stikman.aoc.utils.TextPainter;
 
 public class Day3 extends AoCBase {
 

@@ -20,32 +20,31 @@ public class Day6 extends AoCBase {
 	@Override
 	public void run(String input, int part, Output out) {
 		List<String> lines = Arrays.stream(input.split("\n")).map(String::trim).collect(Collectors.toList());
-			int size = lines.stream().map(String::length).mapToInt(n -> n).max().orElse(0);
-			List<Map<Character, Integer>> counts = new ArrayList<>();
-			for (int i = 0; i < size; ++i)
-				counts.add(new HashMap<>());
-			for (String line : lines) {
-				for (int i = 0; i < size; ++i) {
-					Map<Character, Integer> map = counts.get(i);
-					char ch = line.charAt(i);
-					Integer cnt = map.get(ch);
-					if (cnt == null)
-						map.put(ch, 1);
-					else
-						map.put(ch, cnt + 1);
-				}
-			}
-
-			char[] res = new char[size];
+		int size = lines.stream().map(String::length).mapToInt(n -> n).max().orElse(0);
+		List<Map<Character, Integer>> counts = new ArrayList<>();
+		for (int i = 0; i < size; ++i)
+			counts.add(new HashMap<>());
+		for (String line : lines) {
 			for (int i = 0; i < size; ++i) {
 				Map<Character, Integer> map = counts.get(i);
-				if (part == 0)
-					res[i] = map.entrySet().stream().sorted((a, b) -> b.getValue() - a.getValue()).findFirst().orElseThrow(RuntimeException::new).getKey();
-				else if (part == 1)
-					res[i] = map.entrySet().stream().sorted((a, b) -> a.getValue() - b.getValue()).findFirst().orElseThrow(RuntimeException::new).getKey();
+				char ch = line.charAt(i);
+				Integer cnt = map.get(ch);
+				if (cnt == null)
+					map.put(ch, 1);
+				else
+					map.put(ch, cnt + 1);
 			}
-			out.println("Recovered password is: " + new String(res));
+		}
 
+		char[] res = new char[size];
+		for (int i = 0; i < size; ++i) {
+			Map<Character, Integer> map = counts.get(i);
+			if (part == 0)
+				res[i] = map.entrySet().stream().sorted((a, b) -> b.getValue() - a.getValue()).findFirst().orElseThrow(RuntimeException::new).getKey();
+			else if (part == 1)
+				res[i] = map.entrySet().stream().sorted((a, b) -> a.getValue() - b.getValue()).findFirst().orElseThrow(RuntimeException::new).getKey();
+		}
+		out.println("Recovered password is: " + new String(res));
 
 	}
 
