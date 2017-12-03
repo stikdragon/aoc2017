@@ -90,7 +90,7 @@ public class Day14 extends AoCBase {
 	@Override
 	public void run(String input, int part, Output out) {
 		String salt = input.trim();
-//		salt = "abc";
+		//		salt = "abc";
 
 		LinkedList<Hash> list = new LinkedList<Hash>();
 		LinkedList<Hash> results = new LinkedList<Hash>();
@@ -123,7 +123,7 @@ public class Day14 extends AoCBase {
 			}
 		}
 
-		out.println("Part 1: 64th hash is: " + sixtyforth);
+		out.println("Part " + (part + 1) + ": 64th hash is: " + sixtyforth);
 
 	}
 
