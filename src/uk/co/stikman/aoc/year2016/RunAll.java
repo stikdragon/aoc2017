@@ -1,6 +1,7 @@
 package uk.co.stikman.aoc.year2016;
 
 import uk.co.stikman.aoc.utils.AoCBase;
+import uk.co.stikman.aoc.utils.DayOutput;
 import uk.co.stikman.aoc.utils.Output;
 
 public class RunAll {
@@ -29,12 +30,7 @@ public class RunAll {
 			e.printStackTrace();
 			return;
 		}
-		Output output = new Output() {
-			@Override
-			public void println(String s) {
-				System.out.println("[Day " + day + "] " + s);
-			}
-		};
+		Output output = new DayOutput(day);
 		a.run(SourceData.get(day), 0, output);
 		a.run(SourceData.get(day), 1, output);
 	}
