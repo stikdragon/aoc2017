@@ -54,16 +54,16 @@ public class Day15 extends AoCBase {
 
 	@Override
 	public void run(String input, int part, Output out) {
-		List<Disc> lines = Arrays.stream(input.split("\n")).map(String::trim).map(Disc::new).sorted((a, b) -> a.getId() - b.getId()).collect(Collectors.toList());
+		List<Disc> discs = Arrays.stream(input.split("\n")).map(String::trim).map(Disc::new).sorted((a, b) -> a.getId() - b.getId()).collect(Collectors.toList());
 
 		if (part == 1)
-			lines.add(new Disc(lines.size(), 11, 0));
-		lines.forEach(l -> out.println(l.toString()));
+			discs.add(new Disc(discs.size(), 11, 0));
+		discs.forEach(l -> out.println(l.toString()));
 
 		for (int buttontime = 0; buttontime < Integer.MAX_VALUE; ++buttontime) {
 			boolean b = true;
-			for (int i = 1; i <= lines.size(); ++i) {
-				Disc d = lines.get(i - 1);
+			for (int i = 1; i <= discs.size(); ++i) {
+				Disc d = discs.get(i - 1);
 				int pos = (d.startingPosition + buttontime + i) % d.positions;
 				if (pos != 0) {
 					b = false;
