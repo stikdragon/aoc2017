@@ -5,6 +5,7 @@ import java.util.Arrays;
 import uk.co.stikman.aoc.utils.AoCBase;
 import uk.co.stikman.aoc.utils.ConsoleOutput;
 import uk.co.stikman.aoc.utils.Output;
+import uk.co.stikman.aoc.utils.TextPainter;
 import uk.co.stikman.aoc.utils.Util;
 
 public class Day17 extends AoCBase {
@@ -21,7 +22,7 @@ public class Day17 extends AoCBase {
 	//   3: West (-x dir)
 	//
 	private static final class State {
-		private boolean[]	doors	= new boolean[32];	// 32 doors
+		private boolean[]	doors	= new boolean[32];	//  doors
 		private int			x;
 		private int			y;
 		private String		path	= "";
@@ -77,30 +78,35 @@ public class Day17 extends AoCBase {
 		 */
 		public int getDoorStates(int x, int y) {
 			int r = 0;
-			if (y < 3)
-				r |= doors[y * 4 + x + 16] ? 1 : 0;
-			if (x > 0)
-				r |= doors[y * 4 + x] ? 2 : 0;
 			if (y > 0)
-				r |= doors[(y - 1) * 4 + x + 16] ? 4 : 0;
+				r |= doors[y * 4 + x + 16] ? 1 : 0; // s
 			if (x < 3)
-				r |= doors[y * 4 + x - 1] ? 8 : 0;
+				r |= doors[y * 4 + x + 1] ? 2 : 0; // e
+			if (y < 3)
+				r |= doors[(y + 1) * 4 + x + 16] ? 4 : 0; // n
+			if (x > 0)
+				r |= doors[y * 4 + x] ? 8 : 0; // w
 			return r;
 		}
 
 		public void setDoor(int x, int y, int dir, boolean open) {
 			switch (dir) {
 				case 0: // S
-					doors[y * 4 + x + 16] = open;
+					if (y > 0)
+						doors[y * 4 + x + 16] = open;
 					break;
+
 				case 1: // E
-					doors[y * 4 + x] = open;
+					if (x < 3)
+						setDoor(x + 1, y, 3, open);
 					break;
 				case 2: // N
-					doors[(y - 1) * 4 + x + 16] = open;
+					if (y < 3)
+						setDoor(x, y + 1, 0, open);
 					break;
 				case 3: // W
-					doors[y * 4 + x - 1] = open;
+					if (x > 0)
+						doors[y * 4 + x] = open;
 					break;
 			}
 		}
@@ -146,12 +152,35 @@ public class Day17 extends AoCBase {
 			return path.length();
 		}
 
+		@Override
+		public String toString() {
+			return "State [x=" + x + ", y=" + y + ", path=" + path + ", doors=" + Arrays.toString(doors) + "]";
+		}
+
+		public String draw() {
+			TextPainter tp = new TextPainter();
+			for (int y = 0; y < 4; ++y) {
+				for (int x = 0; x < 4; ++x) {
+					int n = getDoorStates(x, y);
+					tp.putChar(x * 2, y * 2, '#');
+					tp.putChar(x * 2 + 2, y * 2, '#');
+					tp.putChar(x * 2 + 2, y * 2 + 2, '#');
+					tp.putChar(x * 2, y * 2 + 2, '#');
+
+					tp.putChar(x * 2 + 1, y * 2 - 0, (n & 0x1) == 0x1 ? ' ' : '-'); // s
+					tp.putChar(x * 2 + 1, y * 2 + 2, (n & 0x4) == 0x4 ? ' ' : '-'); // n
+					tp.putChar(x * 2 + 2, y * 2 + 1, (n & 0x2) == 0x2 ? ' ' : '|'); // e
+					tp.putChar(x * 2 - 0, y * 2 + 1, (n & 0x8) == 0x8 ? ' ' : '|'); // w
+				}
+			}
+			return tp.toString();
+		}
+
 	}
 
 	@Override
 	public void run(String input, int part, Output out) {
 		String passcode = input.trim();
-
 		//
 		// My approach is going to be to find any route, then use that
 		// as an upper bound and do an exhaustive search of the space 
@@ -160,6 +189,7 @@ public class Day17 extends AoCBase {
 		final char[] FOUR = new char[4];
 		if (part == 0) {
 			State start = new State(0, 0);
+			System.out.println(start.draw());
 			while (true) {
 				State state = new State(start);
 				String hash = Util.md5(passcode + state.getPath());
