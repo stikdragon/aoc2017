@@ -8,3 +8,5 @@ any of my specific puzzle inputs are causing it to go slow then i'll probably ha
 put a bit more thought into it, but it's possible another player's input strings
 might cause other puzzles to break/go slow.   
 
+Sadly being a european means i can't really compete in getting them done first, 
+since they're released at about 4am and i'm not getting up that early every day
