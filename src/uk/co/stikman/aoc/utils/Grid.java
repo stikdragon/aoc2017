@@ -4,7 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 
+ * <p>
+ * This is an infinite grid
+ * </p>
+ * <p>
  * This class is <b>not</b> thread safe
+ * </p>
  * 
  * @author Stik
  *
