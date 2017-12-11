@@ -17,24 +17,10 @@ import javax.imageio.ImageIO;
 import uk.co.stikman.aoc.utils.AoCBase;
 import uk.co.stikman.aoc.utils.ConsoleOutput;
 import uk.co.stikman.aoc.utils.Coord;
+import uk.co.stikman.aoc.utils.IntMap;
 import uk.co.stikman.aoc.utils.Output;
 
 public class Day13 extends AoCBase {
-
-	public class ScoreMap extends HashMap<Coord, Integer> {
-		private static final long serialVersionUID = 1L;
-
-		public int get(Coord c) {
-			Integer r = super.get(c);
-			if (r == null)
-				return Integer.MAX_VALUE / 2;
-			return r.intValue();
-		}
-
-		public Collection<Coord> coordList() {
-			return super.keySet();
-		}
-	}
 
 	public static void main(String[] args) {
 		new Day13().run(SourceData.get(13), 0, new ConsoleOutput());
@@ -67,9 +53,9 @@ public class Day13 extends AoCBase {
 			Set<Coord> open = new HashSet<>();
 			Set<Coord> closed = new HashSet<>();
 			Map<Coord, Coord> from = new HashMap<>();
-			ScoreMap gscores = new ScoreMap();
+			IntMap<Coord> gscores = new IntMap<>(Integer.MAX_VALUE / 2);
 			gscores.put(start, 0);
-			ScoreMap fscores = new ScoreMap();
+			IntMap<Coord> fscores = new IntMap<>(Integer.MAX_VALUE / 2);
 			fscores.put(start, costEstimate(start, destination));
 
 			List<Coord> path = null;
@@ -110,7 +96,7 @@ public class Day13 extends AoCBase {
 			// Recursive flood fill 
 			//
 			Coord start = new Coord(1, 1);
-			ScoreMap visited = new ScoreMap();
+			IntMap<Coord> visited = new IntMap<>(0);
 			floodFill(seed, start, 1, 50, visited);
 
 			drawSample(seed, "out\\Day13_2.png", out, visited.coordList());
@@ -122,7 +108,7 @@ public class Day13 extends AoCBase {
 
 	}
 
-	private void floodFill(int seed, Coord current, int depth, int maxdepth, ScoreMap visited) {
+	private void floodFill(int seed, Coord current, int depth, int maxdepth, IntMap visited) {
 		if (isWall(current.x, current.y, seed))
 			return;
 		int existing = visited.get(current);
