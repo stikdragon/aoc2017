@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import uk.co.stikman.aoc.utils.AoCBase;
 import uk.co.stikman.aoc.utils.ConsoleOutput;
 import uk.co.stikman.aoc.utils.Output;
+import uk.co.stikman.aoc.utils.TextPainter;
 
 public class Day13 extends AoCBase {
 
@@ -66,6 +67,16 @@ public class Day13 extends AoCBase {
 		public String toString() {
 			return "Layer [index=" + index + ", range=" + range + ", position=" + position + "]";
 		}
+
+		public void drawOn(TextPainter canvas) {
+			canvas.put(index * 4, 0, Integer.toString(index));
+			for (int i = 0; i < range; ++i) {
+				canvas.putChar(index * 4, i + 1, '[');
+				canvas.putChar(index * 4 + 2, i + 1, ']');
+				if (position == i)
+					canvas.putChar(index * 4 + 1, i + 1, 'S');
+			}
+		}
 	}
 
 	@Override
@@ -89,27 +100,27 @@ public class Day13 extends AoCBase {
 
 			out.println("Part 1: severity = " + sev);
 		} else if (part == 1) {
+			//
+			// simulating the whole thing is way too slow for this, i gave up after waiting 
+			// 5 minutes for it to tr yeverything up to about 100k.  This way is much faster 
+			//
 			int delay = 0;
 			for (;;) {
-				lines.forEach(Layer::reset);
-				for (int i = 0; i < delay; ++i)
-					lines.forEach(Layer::advance);
-
 				int sev = 0;
-				for (int pos = 0; pos <= max; ++pos) {
-					//
-					// we move, then the layers
-					//
-					if (layers[pos] != null && layers[pos].isTop())
-						sev += layers[pos].severity();
-					lines.forEach(Layer::advance);
+				for (Layer l : lines) {
+					int steps = l.range * 2 - 2; // number of steps if you "unwound" the layer
+					if ((l.index + delay) % steps == 0) {
+						++sev;
+						break;
+					}
 				}
 				if (sev == 0) {
 					out.println("Part 2: delay needs to be " + delay + " to avoid all");
 					return;
 				}
-					
 				++delay;
+				if (delay == Integer.MAX_VALUE)
+					throw new RuntimeException("Overflow");
 			}
 		}
 
