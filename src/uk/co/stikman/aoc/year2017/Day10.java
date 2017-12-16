@@ -84,48 +84,55 @@ public class Day10 extends AoCBase {
 			}
 			out.println("Part 1: Product of first two is = " + list.get(0) * list.get(1));
 		} else {
-			List<Integer> lengths = new ArrayList<>();
-			for (char ch : input.toCharArray())
-				lengths.add((int) ch);
-			lengths.add(17);
-			lengths.add(31);
-			lengths.add(73);
-			lengths.add(47);
-			lengths.add(23);
-
-			int offset = 0;
-			int skip = 0;
-			for (int round = 0; round < 64; ++round) {
-				for (int length : lengths) {
-					List<Integer> tmp = list.sublist(offset, length);
-					for (int i = 0; i < length; ++i)
-						list.set(offset + length - i - 1, tmp.get(i));
-					offset += length + skip++;
-				}
-			}
-
-			//
-			// reduce list to 16 elements
-			//
-			int[] arr = new int[list.size() / 16];
-			for (int i = 0; i < 16; ++i) {
-				int accum = list.get(i * 16);
-				for (int j = 1; j < 16; ++j) 
-					accum ^= list.get(i * 16 + j);
-				arr[i] = accum;
-			}
-			
-			StringBuilder sb = new StringBuilder();
-			for (int i : arr) {
-				if (i < 16)
-					sb.append("0");
-				sb.append(Integer.toHexString(i));
-			}
-			
-
-			out.println("Part 2: Hash = " + sb.toString());
+			out.println("Part 2: Hash = " + knot(input));
 		}
 
+	}
+
+	public static String knot(String input) {
+		CircleList<Integer> list = new CircleList<>(256);
+		for (int i = 0; i < list.size(); ++i)
+			list.set(i, i);
+
+		List<Integer> lengths = new ArrayList<>();
+		for (char ch : input.toCharArray())
+			lengths.add((int) ch);
+		lengths.add(17);
+		lengths.add(31);
+		lengths.add(73);
+		lengths.add(47);
+		lengths.add(23);
+
+		int offset = 0;
+		int skip = 0;
+		for (int round = 0; round < 64; ++round) {
+			for (int length : lengths) {
+				List<Integer> tmp = list.sublist(offset, length);
+				for (int i = 0; i < length; ++i)
+					list.set(offset + length - i - 1, tmp.get(i));
+				offset += length + skip++;
+			}
+		}
+
+		//
+		// reduce list to 16 elements
+		//
+		int[] arr = new int[list.size() / 16];
+		for (int i = 0; i < 16; ++i) {
+			int accum = list.get(i * 16);
+			for (int j = 1; j < 16; ++j)
+				accum ^= list.get(i * 16 + j);
+			arr[i] = accum;
+		}
+
+		StringBuilder sb = new StringBuilder();
+		for (int i : arr) {
+			if (i < 16)
+				sb.append("0");
+			sb.append(Integer.toHexString(i));
+		}
+
+		return sb.toString();
 	}
 
 }

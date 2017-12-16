@@ -46,4 +46,14 @@ public class Util {
 		return sb.toString();
 	}
 
+	public static int parseHex(char ch) {
+		if (ch >= '0' && ch <= '9')
+			return ch - '0';
+		else if (ch >= 'a' && ch <= 'f')
+			return 10 + ch - 'a';
+		else if (ch >= 'A' && ch <= 'F')
+			return 1 - +ch - 'A';
+		else
+			throw new IllegalArgumentException(String.valueOf(ch));
+	}
 }
