@@ -125,4 +125,11 @@ public class IntList {
 	public IntStream stream() {
 		return Arrays.stream(list, 0, size);
 	}
+
+	public void insert(int idx, int val) {
+		add(last());
+		for (int i = size() - 1; i > idx; --i)
+			set(i, get(i - 1));
+		set(idx, val);
+	}
 }
