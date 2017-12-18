@@ -50,6 +50,7 @@ public class Day15 extends AoCBase {
 	public void run(String input, int part, Output out) {
 
 		if (part == 0) {
+			long start = System.currentTimeMillis();
 			Generator genA = new Generator(16807, getStart(input, "Generator A"), 1);
 			Generator genB = new Generator(48271, getStart(input, "Generator B"), 1);
 			int count = 0;
@@ -70,8 +71,9 @@ public class Day15 extends AoCBase {
 					++count;
 
 			}
-			out.println("Part 1: Succeeded: " + count);
+			out.println("Part 1: Succeeded: " + count + " in " + (System.currentTimeMillis() - start) + " ms");
 		} else if (part == 1) {
+			long start = System.currentTimeMillis();
 			Generator genA = new Generator(16807, getStart(input, "Generator A"), 4);
 			Generator genB = new Generator(48271, getStart(input, "Generator B"), 8);
 			int count = 0;
@@ -92,7 +94,7 @@ public class Day15 extends AoCBase {
 					++count;
 
 			}
-			out.println("Part 2: Succeeded: " + count);
+			out.println("Part 2: Succeeded: " + count + " in " + (System.currentTimeMillis() - start) + " ms");
 		}
 
 	}
