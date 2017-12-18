@@ -56,4 +56,13 @@ public class Util {
 		else
 			throw new IllegalArgumentException(String.valueOf(ch));
 	}
+
+	public static String padString(String s, char ch, int n) {
+		if (s.length() >= n)
+			return s;
+		char x[] = new char[n - s.length()];
+		for (int i = 0; i < x.length; ++i)
+			x[i] = ch;
+		return s + String.valueOf(x);
+	}
 }
